@@ -10,3 +10,23 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: bet-matching-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.sporty.groupha.commonlib.messaging.event
+        spring.json.value.default.type: com.sporty.groupha.commonlib.messaging.event.EventOutcomeMessage
+
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: bet-matching-service-producer
+
+app:
+  messaging:
+    event-outcomes-topic: event-outcomes
+    bet-settlements-topic: bet-settlements
