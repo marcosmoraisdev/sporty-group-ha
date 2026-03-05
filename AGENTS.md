@@ -5,7 +5,7 @@ This file defines how coding agents should work in this repository.
 
 ## Project Context
 - The system processes sports event outcomes and triggers bet settlement through a event-driven workflow.
-- Multi-module Maven repository with three services: `sports-result-service`, `bet-matching-service`, and `bet-settlement-service`.
+- Multi-module Maven repository with three services: `event-outcome-service`, `bet-matching-service`, and `bet-settlement-service`.
 - Shared message contracts live in `common-lib/`.
 - Core workflow is event-driven (Kafka + RocketMQ) with REST entry points.
 
