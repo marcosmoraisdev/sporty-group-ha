@@ -1,3 +1,6 @@
+server:
+  port: ${SERVER_PORT:8083}
+
 spring:
   datasource:
     url: jdbc:h2:mem:betsettlementdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
@@ -12,7 +15,7 @@ spring:
     enabled: true
 
 rocketmq:
-  name-server: localhost:9876
+  name-server: ${ROCKETMQ_NAME_SERVER:localhost:9876}
   consumer:
     group: bet-settlement-service
 
