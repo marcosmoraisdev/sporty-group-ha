@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:betsettlementdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+rocketmq:
+  name-server: localhost:9876
+  consumer:
+    group: bet-settlement-service
+
+app:
+  messaging:
+    bet-settlements-topic: bet-settlements
