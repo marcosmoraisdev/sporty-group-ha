@@ -3,10 +3,12 @@ package com.sporty.groupha.betmatching.services;
 import com.sporty.groupha.betmatching.domain.Bet;
 import com.sporty.groupha.betmatching.domain.EventOutcome;
 import com.sporty.groupha.betmatching.infrastructure.entity.BetEntity;
-import com.sporty.groupha.betmatching.infrastructure.mappers.BetEntityMapper;
+import com.sporty.groupha.betmatching.infrastructure.mappers.BetMapper;
 import com.sporty.groupha.betmatching.infrastructure.mappers.BetSettlementMapper;
 import com.sporty.groupha.betmatching.infrastructure.persistence.BetJpaRepository;
+import com.sporty.groupha.betmatching.support.builders.BetEntityTestBuilder;
 import com.sporty.groupha.betmatching.support.builders.BetSettlementMessageTestBuilder;
+import com.sporty.groupha.betmatching.support.builders.BetTestBuilder;
 import com.sporty.groupha.betmatching.support.builders.EventOutcomeTestBuilder;
 import com.sporty.groupha.commonlib.messaging.EventPublisher;
 import com.sporty.groupha.commonlib.messaging.settlement.BetSettlementMessage;
@@ -29,7 +31,7 @@ class ProcessEventOutcomeServiceTest {
     private BetJpaRepository betJpaRepository;
 
     @Mock
-    private BetEntityMapper betEntityMapper;
+    private BetMapper betMapper;
 
     @Mock
     private BetSettlementMapper betSettlementMapper;
@@ -43,12 +45,11 @@ class ProcessEventOutcomeServiceTest {
     @Test
     void publishesOneSettlementMessagePerMatchedBet() {
         EventOutcome eventOutcome = new EventOutcomeTestBuilder().build();
-        BetEntity betEntity = new BetEntity();
-        betEntity.setBetId("bet-1");
-        Bet bet = new Bet("bet-1", "user-1", "event-1", "market-1", "winner-1", new BigDecimal("10.00"));
+        BetEntity betEntity = new BetEntityTestBuilder().build();
+        Bet bet = new BetTestBuilder().build();
         BetSettlementMessage betSettlementMessage = new BetSettlementMessageTestBuilder().build();
         given(betJpaRepository.findByEventId("event-1")).willReturn(List.of(betEntity));
-        given(betEntityMapper.toDomain(betEntity)).willReturn(bet);
+        given(betMapper.toDomain(betEntity)).willReturn(bet);
         given(betSettlementMapper.toMessage(org.mockito.ArgumentMatchers.any())).willReturn(betSettlementMessage);
 
         processEventOutcomeService.process(eventOutcome);

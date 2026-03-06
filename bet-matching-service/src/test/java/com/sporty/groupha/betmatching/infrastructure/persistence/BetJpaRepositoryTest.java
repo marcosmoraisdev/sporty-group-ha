@@ -1,5 +1,7 @@
 package com.sporty.groupha.betmatching.infrastructure.persistence;
 
+import com.sporty.groupha.betmatching.infrastructure.entity.BetEntity;
+import com.sporty.groupha.betmatching.support.builders.BetEntityTestBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,7 +15,19 @@ class BetJpaRepositoryTest {
     private BetJpaRepository betJpaRepository;
 
     @Test
-    void findsBetsByEventId() {
+    void savesBetWithGeneratedUuidPrimaryKey() {
+        BetEntity betEntity = new BetEntityTestBuilder()
+                .withBetId("bet-99")
+                .build();
+
+        BetEntity savedBetEntity = betJpaRepository.save(betEntity);
+
+        assertThat(savedBetEntity.getId()).isNotNull();
+        assertThat(savedBetEntity.getBetId()).isEqualTo("bet-99");
+    }
+
+    @Test
+    void stillFindsBetsByEventId() {
         assertThat(betJpaRepository.findByEventId("event-1")).isNotEmpty();
     }
 }

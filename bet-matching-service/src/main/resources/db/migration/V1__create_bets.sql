@@ -1,5 +1,6 @@
 create table bets (
-    bet_id varchar(255) primary key,
+    id uuid primary key,
+    bet_id varchar(255) not null unique,
     user_id varchar(255) not null,
     event_id varchar(255) not null,
     event_market_id varchar(255) not null,
