@@ -1,7 +1,7 @@
 package com.sporty.group.betsettlement.support.builders;
 
-import com.sporty.group.betsettlement.domain.SettlementResult;
 import com.sporty.group.betsettlement.infrastructure.entity.BetSettlementEntity;
+import com.sporty.group.commonlib.messaging.settlement.BetSettlementResult;
 
 import java.math.BigDecimal;
 
@@ -14,7 +14,7 @@ public class BetSettlementEntityTestBuilder {
     private String expectedWinnerId = "winner-1";
     private String actualWinnerId = "winner-1";
     private BigDecimal betAmount = new BigDecimal("10.00");
-    private SettlementResult result = SettlementResult.WON;
+    private BetSettlementResult result = BetSettlementResult.WON;
 
     public static BetSettlementEntityTestBuilder builder() {
         return new BetSettlementEntityTestBuilder();

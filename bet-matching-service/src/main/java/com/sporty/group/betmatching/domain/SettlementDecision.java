@@ -1,5 +1,7 @@
 package com.sporty.group.betmatching.domain;
 
+import com.sporty.group.commonlib.messaging.settlement.BetSettlementResult;
+
 import java.math.BigDecimal;
 
 public record SettlementDecision(
@@ -10,6 +12,6 @@ public record SettlementDecision(
         String expectedWinnerId,
         String actualWinnerId,
         BigDecimal betAmount,
-        SettlementResult result
+        BetSettlementResult result
 ) {
 }

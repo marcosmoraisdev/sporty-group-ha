@@ -1,5 +1,7 @@
 package com.sporty.group.betsettlement.domain;
 
+import com.sporty.group.commonlib.messaging.settlement.BetSettlementResult;
+
 import java.math.BigDecimal;
 
 public record BetSettlement(
@@ -10,7 +12,7 @@ public record BetSettlement(
         String expectedWinnerId,
         String actualWinnerId,
         BigDecimal betAmount,
-        SettlementResult result
+        BetSettlementResult result
 ) {
 
     public static BetSettlement create(
@@ -21,7 +23,7 @@ public record BetSettlement(
             String expectedWinnerId,
             String actualWinnerId,
             BigDecimal betAmount,
-            SettlementResult result
+            BetSettlementResult result
     ) {
         if (betId == null || betId.isEmpty()) {
             throw new IllegalArgumentException("betId must not be blank");

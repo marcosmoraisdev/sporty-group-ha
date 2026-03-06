@@ -1,13 +1,7 @@
 package com.sporty.group.betsettlement.infrastructure.entity;
 
-import com.sporty.group.betsettlement.domain.SettlementResult;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.sporty.group.commonlib.messaging.settlement.BetSettlementResult;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,5 +47,5 @@ public class BetSettlementEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "result", nullable = false, length = 16)
-    private SettlementResult result;
+    private BetSettlementResult result;
 }

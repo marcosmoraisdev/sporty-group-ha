@@ -1,9 +1,9 @@
 package com.sporty.group.betsettlement.domain;
 
 import com.sporty.group.betsettlement.support.builders.BetSettlementTestBuilder;
+import com.sporty.group.commonlib.messaging.settlement.BetSettlementResult;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +22,7 @@ class BetSettlementTest {
         assertThat(betSettlement.expectedWinnerId()).isEqualTo("winner-1");
         assertThat(betSettlement.actualWinnerId()).isEqualTo("winner-1");
         assertThat(betSettlement.betAmount()).isEqualByComparingTo("10.00");
-        assertThat(betSettlement.result()).isEqualTo(SettlementResult.WON);
+        assertThat(betSettlement.result()).isEqualTo(BetSettlementResult.WON);
     }
 
     @Test

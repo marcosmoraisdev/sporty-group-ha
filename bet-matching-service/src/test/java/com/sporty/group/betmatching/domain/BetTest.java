@@ -2,6 +2,7 @@ package com.sporty.group.betmatching.domain;
 
 import com.sporty.group.betmatching.support.builders.BetTestBuilder;
 import com.sporty.group.betmatching.support.builders.EventOutcomeTestBuilder;
+import com.sporty.group.commonlib.messaging.settlement.BetSettlementResult;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,7 @@ class BetTest {
 
         SettlementDecision settlementDecision = bet.settleAgainst(eventOutcome);
 
-        assertThat(settlementDecision.result()).isEqualTo(SettlementResult.WON);
+        assertThat(settlementDecision.result()).isEqualTo(BetSettlementResult.WON);
     }
 
     @Test
@@ -29,6 +30,6 @@ class BetTest {
 
         SettlementDecision settlementDecision = bet.settleAgainst(eventOutcome);
 
-        assertThat(settlementDecision.result()).isEqualTo(SettlementResult.LOST);
+        assertThat(settlementDecision.result()).isEqualTo(BetSettlementResult.LOST);
     }
 }
