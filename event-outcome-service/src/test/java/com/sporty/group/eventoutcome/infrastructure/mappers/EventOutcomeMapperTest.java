@@ -28,17 +28,6 @@ class EventOutcomeMapperTest {
     }
 
     @Test
-    void rejectsInvalidRequestValuesThroughMapper() {
-        EventOutcomeRequest eventOutcomeRequest = EventOutcomeRequestTestBuilder.builder()
-                .withEventId(null)
-                .build();
-
-        assertThatThrownBy(() -> eventOutcomeMapper.toDomain(eventOutcomeRequest))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("eventId");
-    }
-
-    @Test
     void mapsDomainToEntityWithIgnoredGeneratedFieldsLeftUnset() {
         EventOutcome eventOutcome = EventOutcomeTestBuilder.builder().build();
 

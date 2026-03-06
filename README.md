@@ -1,7 +1,7 @@
 # Sports Betting Settlement Workflow
 
 ## Purpose
-This repository implements a small event-driven sports betting settlement workflow for a hiring assignment.
+This repository implements an event-driven sports betting settlement workflow for a hiring assignment.
 
 The system accepts an event outcome over HTTP, publishes it to Kafka, matches affected bets, publishes settlement commands to RocketMQ, and persists the final settlement result.
 
@@ -59,14 +59,6 @@ event-outcome-service (HTTP)
 - Validates and maps the message into a rich domain model.
 - Persists the final settlement record in its own H2 database.
 
-## Design Choices
-- Java records are used where immutability is a good fit.
-- Domain invariants are enforced through factory methods where the model should not be created blindly.
-- Enums are used instead of free-form strings for settlement outcomes.
-- Each service owns its own in-memory H2 database and Flyway migrations.
-- The worker services are message-driven. Only `event-outcome-service` exposes an external API.
-- Dockerfiles are intentionally simple and copy prebuilt JARs from `target/`.
-
 ## Versions
 Application and library versions used in the implementation:
 
@@ -77,22 +69,9 @@ Application and library versions used in the implementation:
 
 Messaging and runtime image tags used in `docker-compose.yml`:
 
-- Apache Kafka: `apache/kafka:latest`
+- Apache Kafka: `apache/kafka:4.2.0`
 - Apache RocketMQ: `apache/rocketmq:5.4.0`
 - Java runtime base image for service containers: `eclipse-temurin:17-jre`
-
-Notes:
-
-- `spring-kafka`, `flyway-core`, and `h2` are managed through Spring Boot `3.5.11`.
-- Kafka is intentionally kept on the `latest` Docker tag because the assignment asked to use the latest image.
-
-## End-to-End Flow
-1. A client sends an event outcome to `event-outcome-service`.
-2. The service persists an audit row and publishes the outcome to Kafka.
-3. `bet-matching-service` consumes the outcome and loads bets by `eventId`.
-4. Each matching bet evaluates itself against the actual winner through domain logic.
-5. The service publishes one settlement command per matched bet to RocketMQ.
-6. `bet-settlement-service` consumes the command and persists the final settlement result.
 
 ## Demo Data
 `bet-matching-service` seeds these bets through Flyway:
@@ -117,12 +96,6 @@ Build the JARs first because each Dockerfile copies `target/*.jar`:
 
 ```bash
 ./mvnw -q clean package
-```
-
-Validate the Compose file:
-
-```bash
-docker compose config
 ```
 
 Start the stack:
@@ -167,21 +140,28 @@ That single request should trigger:
 - two matched bets processed by `bet-matching-service`
 - two settlement rows persisted by `bet-settlement-service`
 
+## Database Access
+Each service has its own H2 database instance, configured in `application.properties`. You can connect to them using the H2 Console or any JDBC client:
+ 
+| Service | Console URL | JDBC URL |
+| --- | --- | --- |
+| Event Outcome | http://localhost:8081/h2-console | `jdbc:h2:mem:eventoutcomedb` |
+| Bet Matching | http://localhost:8082/h2-console | `jdbc:h2:mem:betmatchingdb` |
+| Bet Settlement | http://localhost:8083/h2-console | `jdbc:h2:mem:betsettlementdb` |
+
 ## Testing Strategy
 The current test suite is intentionally fast and focused:
 
 - domain unit tests for business rules and invariants
 - service unit tests for orchestration
 - listener and publisher unit tests with Mockito
-- `@WebMvcTest` for the HTTP controller
-- `@DataJpaTest` for repository query behavior where it adds value
-- `@SpringBootTest` context checks for each service
+- @WebMvcTest for the HTTP controller
+- @DataJpaTest for repository query behavior where it adds value
 
 Verification commands used during implementation:
 
 ```bash
-./mvnw -q test
-docker compose config
+./mvnw test
 ```
 
 Intentionally excluded in this phase:
@@ -205,17 +185,11 @@ Deliberate simplifications for the assignment:
 
 These trade-offs keep the code readable and focused on the core event-driven workflow while still demonstrating:
 
-- clear service boundaries
-- rich domain models
-- explicit mapping boundaries with MapStruct
-- per-service persistence ownership
-- pragmatic microservice packaging in a mono-repo
-
-## Next Improvements
-If this moved beyond the assignment scope, the next additions would be:
-
-1. add message idempotency and duplicate protection
-2. add an outbox strategy for more reliable event publication
-3. pin Kafka to a fixed release tag for reproducible local environments
-4. add Testcontainers-based integration tests for Kafka and RocketMQ
-5. expose operational metrics and tracing
+- clearly defined service boundaries
+- rich, business-focused domain models
+- a pragmatic Clean Architecture structure
+- strong object-oriented design
+- clear ownership of persistence within each service
+- a lean, practical microservice setup
+- consistent application of SOLID principles
+- a maintainable foundation that can evolve toward more production-ready capabilities
