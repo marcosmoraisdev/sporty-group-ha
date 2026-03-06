@@ -3,9 +3,9 @@ package com.sporty.groupha.eventoutcome.services;
 import com.sporty.groupha.commonlib.messaging.EventPublisher;
 import com.sporty.groupha.commonlib.messaging.event.EventOutcomeMessage;
 import com.sporty.groupha.eventoutcome.domain.EventOutcome;
-import com.sporty.groupha.eventoutcome.infrastructure.entity.AcceptedEventOutcomeEntity;
+import com.sporty.groupha.eventoutcome.infrastructure.entity.EventOutcomeEntity;
 import com.sporty.groupha.eventoutcome.infrastructure.mappers.EventOutcomeMapper;
-import com.sporty.groupha.eventoutcome.infrastructure.persistence.AcceptedEventOutcomeJpaRepository;
+import com.sporty.groupha.eventoutcome.infrastructure.persistence.EventOutcomeJpaRepository;
 import com.sporty.groupha.eventoutcome.support.builders.EventOutcomeEntityTestBuilder;
 import com.sporty.groupha.eventoutcome.support.builders.EventOutcomeMessageTestBuilder;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.inOrder;
 class PublishEventOutcomeServiceTest {
 
     @Mock
-    private AcceptedEventOutcomeJpaRepository acceptedEventOutcomeJpaRepository;
+    private EventOutcomeJpaRepository eventOutcomeJpaRepository;
 
     @Mock
     private EventOutcomeMapper eventOutcomeMapper;
@@ -36,17 +36,17 @@ class PublishEventOutcomeServiceTest {
     @Test
     void savesAcceptedOutcomeBeforePublishing() {
         EventOutcome eventOutcome = EventOutcome.create("event-1", "Match A", "winner-1");
-        AcceptedEventOutcomeEntity acceptedEventOutcomeEntity = new EventOutcomeEntityTestBuilder().build();
+        EventOutcomeEntity eventOutcomeEntity = new EventOutcomeEntityTestBuilder().build();
         EventOutcomeMessage eventOutcomeMessage = new EventOutcomeMessageTestBuilder().build();
         given(eventOutcomeMapper.toEntity(eventOutcome))
-                .willReturn(acceptedEventOutcomeEntity);
+                .willReturn(eventOutcomeEntity);
         given(eventOutcomeMapper.toMessage(eventOutcome))
                 .willReturn(eventOutcomeMessage);
 
         publishEventOutcomeService.publish(eventOutcome);
 
-        InOrder inOrder = inOrder(acceptedEventOutcomeJpaRepository, eventPublisher);
-        inOrder.verify(acceptedEventOutcomeJpaRepository).save(acceptedEventOutcomeEntity);
+        InOrder inOrder = inOrder(eventOutcomeJpaRepository, eventPublisher);
+        inOrder.verify(eventOutcomeJpaRepository).save(eventOutcomeEntity);
         inOrder.verify(eventPublisher).publish(eventOutcomeMessage);
     }
 }

@@ -3,7 +3,7 @@ package com.sporty.groupha.eventoutcome.infrastructure.mappers;
 import com.sporty.groupha.commonlib.messaging.event.EventOutcomeMessage;
 import com.sporty.groupha.eventoutcome.domain.EventOutcome;
 import com.sporty.groupha.eventoutcome.infrastructure.dto.EventOutcomeRequest;
-import com.sporty.groupha.eventoutcome.infrastructure.entity.AcceptedEventOutcomeEntity;
+import com.sporty.groupha.eventoutcome.infrastructure.entity.EventOutcomeEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -23,7 +23,7 @@ public interface EventOutcomeMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", expression = "java(LocalDateTime.now())")
-    AcceptedEventOutcomeEntity toEntity(EventOutcome eventOutcome);
+    EventOutcomeEntity toEntity(EventOutcome eventOutcome);
 
     EventOutcomeMessage toMessage(EventOutcome eventOutcome);
 }

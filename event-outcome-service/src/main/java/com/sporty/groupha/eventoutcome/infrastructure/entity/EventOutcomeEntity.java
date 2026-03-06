@@ -7,16 +7,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "accepted_event_outcomes")
-public class AcceptedEventOutcomeEntity {
+@Getter
+public class EventOutcomeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "event_id", nullable = false)
     private String eventId;
@@ -30,40 +33,20 @@ public class AcceptedEventOutcomeEntity {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getEventId() {
-        return eventId;
     }
 
     public void setEventId(String eventId) {
         this.eventId = eventId;
     }
 
-    public String getEventName() {
-        return eventName;
-    }
-
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
 
-    public String getEventWinnerId() {
-        return eventWinnerId;
-    }
-
     public void setEventWinnerId(String eventWinnerId) {
         this.eventWinnerId = eventWinnerId;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {

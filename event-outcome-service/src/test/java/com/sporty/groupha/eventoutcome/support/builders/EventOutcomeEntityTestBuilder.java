@@ -1,6 +1,6 @@
 package com.sporty.groupha.eventoutcome.support.builders;
 
-import com.sporty.groupha.eventoutcome.infrastructure.entity.AcceptedEventOutcomeEntity;
+import com.sporty.groupha.eventoutcome.infrastructure.entity.EventOutcomeEntity;
 
 import java.time.LocalDateTime;
 
@@ -31,12 +31,12 @@ public class EventOutcomeEntityTestBuilder {
         return this;
     }
 
-    public AcceptedEventOutcomeEntity build() {
-        AcceptedEventOutcomeEntity acceptedEventOutcomeEntity = new AcceptedEventOutcomeEntity();
-        acceptedEventOutcomeEntity.setEventId(eventId);
-        acceptedEventOutcomeEntity.setEventName(eventName);
-        acceptedEventOutcomeEntity.setEventWinnerId(eventWinnerId);
-        acceptedEventOutcomeEntity.setCreatedAt(createdAt);
-        return acceptedEventOutcomeEntity;
+    public EventOutcomeEntity build() {
+        EventOutcomeEntity eventOutcomeEntity = new EventOutcomeEntity();
+        eventOutcomeEntity.setEventId(eventId);
+        eventOutcomeEntity.setEventName(eventName);
+        eventOutcomeEntity.setEventWinnerId(eventWinnerId);
+        eventOutcomeEntity.setCreatedAt(createdAt);
+        return eventOutcomeEntity;
     }
 }
