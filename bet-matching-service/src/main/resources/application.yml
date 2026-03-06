@@ -21,8 +21,8 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.sporty.groupha.commonlib.messaging.event
-        spring.json.value.default.type: com.sporty.groupha.commonlib.messaging.event.EventOutcomeMessage
+        spring.json.trusted.packages: com.sporty.group.commonlib.messaging.event
+        spring.json.value.default.type: com.sporty.group.commonlib.messaging.event.EventOutcomeMessage
 
 rocketmq:
   name-server: ${ROCKETMQ_NAME_SERVER:localhost:9876}

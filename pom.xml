@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.sporty.groupha</groupId>
+    <groupId>com.sporty.group</groupId>
     <artifactId>sporty-group-ha</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
