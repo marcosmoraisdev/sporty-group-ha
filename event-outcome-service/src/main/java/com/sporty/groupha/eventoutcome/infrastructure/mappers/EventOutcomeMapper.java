@@ -8,9 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
-import java.time.LocalDateTime;
-
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, imports = LocalDateTime.class)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface EventOutcomeMapper {
 
     default EventOutcome toDomain(EventOutcomeRequest eventOutcomeRequest) {
@@ -22,7 +20,7 @@ public interface EventOutcomeMapper {
     }
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", expression = "java(LocalDateTime.now())")
+    @Mapping(target = "createdAt", ignore = true)
     EventOutcomeEntity toEntity(EventOutcome eventOutcome);
 
     EventOutcomeMessage toMessage(EventOutcome eventOutcome);

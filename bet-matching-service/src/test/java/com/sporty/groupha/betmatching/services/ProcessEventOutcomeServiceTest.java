@@ -21,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -50,7 +51,7 @@ class ProcessEventOutcomeServiceTest {
         BetSettlementMessage betSettlementMessage = new BetSettlementMessageTestBuilder().build();
         given(betJpaRepository.findByEventId("event-1")).willReturn(List.of(betEntity));
         given(betMapper.toDomain(betEntity)).willReturn(bet);
-        given(betSettlementMapper.toMessage(org.mockito.ArgumentMatchers.any())).willReturn(betSettlementMessage);
+        given(betSettlementMapper.toMessage(any())).willReturn(betSettlementMessage);
 
         processEventOutcomeService.process(eventOutcome);
 
