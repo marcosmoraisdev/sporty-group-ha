@@ -6,10 +6,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BetMapper {
 
-    @Mapping(target = "tleAgainst", ignore = true)
     @Mapping(target = "betId", source = "betId")
     @Mapping(target = "userId", source = "userId")
     @Mapping(target = "eventId", source = "eventId")

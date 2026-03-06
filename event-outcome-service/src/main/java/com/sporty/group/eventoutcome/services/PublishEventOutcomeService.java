@@ -21,13 +21,13 @@ public class PublishEventOutcomeService {
 
     public void publish(EventOutcome eventOutcome) {
         String eventId = eventOutcome.eventId();
+        log.info("Persisting and publishing event outcome for eventId={}", eventId);
+
         EventOutcomeEntity eventOutcomeEntity = eventOutcomeMapper.toEntity(eventOutcome);
-        EventOutcomeMessage eventOutcomeMessage = eventOutcomeMapper.toMessage(eventOutcome);
-
-        log.info("Persisting event outcome for eventId={}", eventId);
         eventOutcomeJpaRepository.save(eventOutcomeEntity);
-
-        log.info("Publishing event outcome message for eventId={}", eventId);
+        EventOutcomeMessage eventOutcomeMessage = eventOutcomeMapper.toMessage(eventOutcome);
         eventPublisher.publish(eventOutcomeMessage);
+
+        log.info("Event outcome successfully saved and published for eventId={}", eventId);
     }
 }

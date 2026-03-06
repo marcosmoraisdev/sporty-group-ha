@@ -24,8 +24,7 @@ public class EventOutcomeController {
 
     @PostMapping
     public ResponseEntity<Void> publish(@Valid @RequestBody EventOutcomeRequest eventOutcomeRequest) {
-        String eventId = eventOutcomeRequest.eventId();
-        log.info("Received event outcome request for eventId={}", eventId);
+        log.info("Received event outcome request for eventId={}", eventOutcomeRequest.eventId());
 
         EventOutcome eventOutcome = eventOutcomeMapper.toDomain(eventOutcomeRequest);
 

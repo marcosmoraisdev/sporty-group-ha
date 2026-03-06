@@ -24,10 +24,7 @@ public class RocketMqBetSettlementPublisher implements EventPublisher<BetSettlem
 
     @Override
     public void publish(BetSettlementMessage betSettlementMessage) {
-        String betId = betSettlementMessage.betId();
-        String configuredTopicName = topicName;
-
-        log.info("Publishing settlement message to topic={} betId={}", configuredTopicName, betId);
+        log.info("Publishing settlement message to topic={} betId={}", topicName, betSettlementMessage.betId());
         rocketMQTemplate.syncSend(topicName, betSettlementMessage);
     }
 }

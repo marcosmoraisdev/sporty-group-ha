@@ -24,10 +24,7 @@ public class KafkaEventOutcomePublisher implements EventPublisher<EventOutcomeMe
 
     @Override
     public void publish(EventOutcomeMessage eventOutcomeMessage) {
-        String eventId = eventOutcomeMessage.eventId();
-        String configuredTopicName = topicName;
-
-        log.info("Sending event outcome message to topic={} for eventId={}", configuredTopicName, eventId);
+        log.info("Sending event outcome message to topic={} for eventId={}", topicName, eventOutcomeMessage.eventId());
         kafkaTemplate.send(topicName, eventOutcomeMessage);
     }
 }

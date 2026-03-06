@@ -17,11 +17,10 @@ public class BetSettlementService {
     private final BetSettlementJpaRepository betSettlementJpaRepository;
 
     public void apply(BetSettlement betSettlement) {
-        String betId = betSettlement.betId();
+        log.info("Persisting bet settlement for betId={}", betSettlement.betId());
         BetSettlementEntity betSettlementEntity = betSettlementMapper.toEntity(betSettlement);
 
-        log.info("Persisting bet settlement for betId={}", betId);
         betSettlementJpaRepository.save(betSettlementEntity);
-        log.info("Persisted bet settlement for betId={}", betId);
+        log.info("Persisted bet settlement for betId={}", betSettlement.betId());
     }
 }
