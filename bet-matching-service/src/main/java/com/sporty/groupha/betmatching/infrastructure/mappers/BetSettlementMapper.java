@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
-public interface BetSettlementMessageMapper {
+public interface BetSettlementMapper {
 
     BetSettlementMessage toMessage(SettlementDecision settlementDecision);
 }

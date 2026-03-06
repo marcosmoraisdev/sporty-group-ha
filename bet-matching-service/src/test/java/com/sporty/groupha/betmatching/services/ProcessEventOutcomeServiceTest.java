@@ -4,11 +4,12 @@ import com.sporty.groupha.betmatching.domain.Bet;
 import com.sporty.groupha.betmatching.domain.EventOutcome;
 import com.sporty.groupha.betmatching.infrastructure.entity.BetEntity;
 import com.sporty.groupha.betmatching.infrastructure.mappers.BetEntityMapper;
-import com.sporty.groupha.betmatching.infrastructure.mappers.BetSettlementMessageMapper;
-import com.sporty.groupha.betmatching.infrastructure.messaging.RocketMqBetSettlementPublisher;
+import com.sporty.groupha.betmatching.infrastructure.mappers.BetSettlementMapper;
 import com.sporty.groupha.betmatching.infrastructure.persistence.BetJpaRepository;
+import com.sporty.groupha.betmatching.support.builders.BetSettlementMessageTestBuilder;
+import com.sporty.groupha.betmatching.support.builders.EventOutcomeTestBuilder;
+import com.sporty.groupha.commonlib.messaging.EventPublisher;
 import com.sporty.groupha.commonlib.messaging.settlement.BetSettlementMessage;
-import com.sporty.groupha.commonlib.messaging.settlement.BetSettlementResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,36 +32,27 @@ class ProcessEventOutcomeServiceTest {
     private BetEntityMapper betEntityMapper;
 
     @Mock
-    private BetSettlementMessageMapper betSettlementMessageMapper;
+    private BetSettlementMapper betSettlementMapper;
 
     @Mock
-    private RocketMqBetSettlementPublisher rocketMqBetSettlementPublisher;
+    private EventPublisher<BetSettlementMessage> eventPublisher;
 
     @InjectMocks
     private ProcessEventOutcomeService processEventOutcomeService;
 
     @Test
     void publishesOneSettlementMessagePerMatchedBet() {
-        EventOutcome eventOutcome = new EventOutcome("event-1", "Match A", "winner-1");
+        EventOutcome eventOutcome = new EventOutcomeTestBuilder().build();
         BetEntity betEntity = new BetEntity();
         betEntity.setBetId("bet-1");
         Bet bet = new Bet("bet-1", "user-1", "event-1", "market-1", "winner-1", new BigDecimal("10.00"));
-        BetSettlementMessage betSettlementMessage = new BetSettlementMessage(
-                "bet-1",
-                "user-1",
-                "event-1",
-                "market-1",
-                "winner-1",
-                "winner-1",
-                new BigDecimal("10.00"),
-                BetSettlementResult.WON
-        );
+        BetSettlementMessage betSettlementMessage = new BetSettlementMessageTestBuilder().build();
         given(betJpaRepository.findByEventId("event-1")).willReturn(List.of(betEntity));
         given(betEntityMapper.toDomain(betEntity)).willReturn(bet);
-        given(betSettlementMessageMapper.toMessage(org.mockito.ArgumentMatchers.any())).willReturn(betSettlementMessage);
+        given(betSettlementMapper.toMessage(org.mockito.ArgumentMatchers.any())).willReturn(betSettlementMessage);
 
         processEventOutcomeService.process(eventOutcome);
 
-        verify(rocketMqBetSettlementPublisher).publish(betSettlementMessage);
+        verify(eventPublisher).publish(betSettlementMessage);
     }
 }

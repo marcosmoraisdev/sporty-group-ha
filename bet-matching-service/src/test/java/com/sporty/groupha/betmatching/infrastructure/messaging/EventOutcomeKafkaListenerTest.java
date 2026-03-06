@@ -1,7 +1,7 @@
 package com.sporty.groupha.betmatching.infrastructure.messaging;
 
 import com.sporty.groupha.betmatching.domain.EventOutcome;
-import com.sporty.groupha.betmatching.infrastructure.mappers.EventOutcomeMessageMapper;
+import com.sporty.groupha.betmatching.infrastructure.mappers.EventOutcomeMapper;
 import com.sporty.groupha.betmatching.services.ProcessEventOutcomeService;
 import com.sporty.groupha.commonlib.messaging.event.EventOutcomeMessage;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 class EventOutcomeKafkaListenerTest {
 
     @Mock
-    private EventOutcomeMessageMapper eventOutcomeMessageMapper;
+    private EventOutcomeMapper eventOutcomeMapper;
 
     @Mock
     private ProcessEventOutcomeService processEventOutcomeService;
@@ -29,7 +29,7 @@ class EventOutcomeKafkaListenerTest {
     void delegatesConsumedMessageToService() {
         EventOutcomeMessage eventOutcomeMessage = new EventOutcomeMessage("event-1", "Match A", "winner-1");
         EventOutcome eventOutcome = new EventOutcome("event-1", "Match A", "winner-1");
-        given(eventOutcomeMessageMapper.toDomain(eventOutcomeMessage)).willReturn(eventOutcome);
+        given(eventOutcomeMapper.toDomain(eventOutcomeMessage)).willReturn(eventOutcome);
 
         eventOutcomeKafkaListener.onMessage(eventOutcomeMessage);
 
