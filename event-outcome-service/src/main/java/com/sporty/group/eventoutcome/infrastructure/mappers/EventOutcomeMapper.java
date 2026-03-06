@@ -14,11 +14,27 @@ public interface EventOutcomeMapper {
     @Mapping(target = "eventId", source = "eventId")
     @Mapping(target = "eventName", source = "eventName")
     @Mapping(target = "eventWinnerId", source = "eventWinnerId")
-    EventOutcome toDomain(EventOutcomeRequest eventOutcomeRequest);
+    EventOutcomeValues toDomainValues(EventOutcomeRequest eventOutcomeRequest);
+
+    default EventOutcome toDomain(EventOutcomeRequest eventOutcomeRequest) {
+        EventOutcomeValues eventOutcomeValues = toDomainValues(eventOutcomeRequest);
+        String eventId = eventOutcomeValues.eventId();
+        String eventName = eventOutcomeValues.eventName();
+        String eventWinnerId = eventOutcomeValues.eventWinnerId();
+
+        return EventOutcome.create(eventId, eventName, eventWinnerId);
+    }
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     EventOutcomeEntity toEntity(EventOutcome eventOutcome);
 
     EventOutcomeMessage toMessage(EventOutcome eventOutcome);
+
+    record EventOutcomeValues(
+            String eventId,
+            String eventName,
+            String eventWinnerId
+    ) {
+    }
 }
