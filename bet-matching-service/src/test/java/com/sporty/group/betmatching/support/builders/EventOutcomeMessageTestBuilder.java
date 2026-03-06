@@ -8,6 +8,10 @@ public class EventOutcomeMessageTestBuilder {
     private String eventName = "Match A";
     private String eventWinnerId = "winner-1";
 
+    public static EventOutcomeMessageTestBuilder builder() {
+        return new EventOutcomeMessageTestBuilder();
+    }
+
     public EventOutcomeMessage build() {
         return new EventOutcomeMessage(eventId, eventName, eventWinnerId);
     }

@@ -16,7 +16,7 @@ class BetJpaRepositoryTest {
 
     @Test
     void savesBetWithGeneratedUuidPrimaryKey() {
-        BetEntity betEntity = new BetEntityTestBuilder()
+        BetEntity betEntity = BetEntityTestBuilder.builder()
                 .withBetId("bet-99")
                 .build();
 

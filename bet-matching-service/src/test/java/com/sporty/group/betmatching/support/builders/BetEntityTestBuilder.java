@@ -13,6 +13,10 @@ public class BetEntityTestBuilder {
     private String eventWinnerId = "winner-1";
     private BigDecimal betAmount = new BigDecimal("10.00");
 
+    public static BetEntityTestBuilder builder() {
+        return new BetEntityTestBuilder();
+    }
+
     public BetEntityTestBuilder withBetId(String betId) {
         this.betId = betId;
         return this;

@@ -19,7 +19,7 @@ class RocketMqBetSettlementPublisherTest {
 
     @Test
     void sendsSettlementMessageToConfiguredTopic() {
-        BetSettlementMessage betSettlementMessage = new BetSettlementMessageTestBuilder().build();
+        BetSettlementMessage betSettlementMessage = BetSettlementMessageTestBuilder.builder().build();
         EventPublisher<BetSettlementMessage> eventPublisher =
                 new RocketMqBetSettlementPublisher(rocketMQTemplate, "bet-settlements");
 

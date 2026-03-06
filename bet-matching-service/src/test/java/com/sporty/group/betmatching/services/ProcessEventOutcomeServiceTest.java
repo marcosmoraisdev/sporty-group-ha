@@ -45,10 +45,10 @@ class ProcessEventOutcomeServiceTest {
 
     @Test
     void publishesOneSettlementMessagePerMatchedBet() {
-        EventOutcome eventOutcome = new EventOutcomeTestBuilder().build();
-        BetEntity betEntity = new BetEntityTestBuilder().build();
-        Bet bet = new BetTestBuilder().build();
-        BetSettlementMessage betSettlementMessage = new BetSettlementMessageTestBuilder().build();
+        EventOutcome eventOutcome = EventOutcomeTestBuilder.builder().build();
+        BetEntity betEntity = BetEntityTestBuilder.builder().build();
+        Bet bet = BetTestBuilder.builder().build();
+        BetSettlementMessage betSettlementMessage = BetSettlementMessageTestBuilder.builder().build();
         given(betJpaRepository.findByEventId("event-1")).willReturn(List.of(betEntity));
         given(betMapper.toDomain(betEntity)).willReturn(bet);
         given(betSettlementMapper.toMessage(any())).willReturn(betSettlementMessage);

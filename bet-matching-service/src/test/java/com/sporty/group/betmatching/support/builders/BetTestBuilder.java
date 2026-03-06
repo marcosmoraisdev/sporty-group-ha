@@ -13,8 +13,17 @@ public class BetTestBuilder {
     private String eventWinnerId = "winner-1";
     private BigDecimal betAmount = new BigDecimal("10.00");
 
+    public static BetTestBuilder builder() {
+        return new BetTestBuilder();
+    }
+
     public BetTestBuilder withBetId(String betId) {
         this.betId = betId;
+        return this;
+    }
+
+    public BetTestBuilder withEventWinnerId(String eventWinnerId) {
+        this.eventWinnerId = eventWinnerId;
         return this;
     }
 

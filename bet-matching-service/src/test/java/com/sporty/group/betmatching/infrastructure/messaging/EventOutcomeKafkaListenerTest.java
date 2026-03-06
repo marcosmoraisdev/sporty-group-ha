@@ -29,8 +29,8 @@ class EventOutcomeKafkaListenerTest {
 
     @Test
     void delegatesConsumedMessageToService() {
-        EventOutcomeMessage eventOutcomeMessage = new EventOutcomeMessageTestBuilder().build();
-        EventOutcome eventOutcome = new EventOutcomeTestBuilder().build();
+        EventOutcomeMessage eventOutcomeMessage = EventOutcomeMessageTestBuilder.builder().build();
+        EventOutcome eventOutcome = EventOutcomeTestBuilder.builder().build();
         given(eventOutcomeMapper.toDomain(eventOutcomeMessage)).willReturn(eventOutcome);
 
         eventOutcomeKafkaListener.onMessage(eventOutcomeMessage);
