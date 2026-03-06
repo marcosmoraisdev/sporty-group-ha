@@ -1,5 +1,7 @@
 package com.sporty.groupha.eventoutcome.domain;
 
+import org.springframework.util.StringUtils;
+
 public record EventOutcome(
         String eventId,
         String eventName,
@@ -7,16 +9,16 @@ public record EventOutcome(
 ) {
 
     public static EventOutcome create(String eventId, String eventName, String eventWinnerId) {
-        validate("eventId", eventId);
-        validate("eventName", eventName);
-        validate("eventWinnerId", eventWinnerId);
-
-        return new EventOutcome(eventId.trim(), eventName.trim(), eventWinnerId.trim());
-    }
-
-    private static void validate(String fieldName, String value) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException(fieldName + " must not be blank");
+        if (StringUtils.isEmpty(eventId)) {
+            throw new IllegalArgumentException("eventId must not be blank");
         }
+        if (StringUtils.isEmpty(eventName)) {
+            throw new IllegalArgumentException("eventName must not be blank");
+        }
+        if (StringUtils.isEmpty(eventWinnerId)) {
+            throw new IllegalArgumentException("eventWinnerId must not be blank");
+        }
+
+        return new EventOutcome(eventId, eventName, eventWinnerId);
     }
 }
