@@ -11,13 +11,10 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface EventOutcomeMapper {
 
-    default EventOutcome toDomain(EventOutcomeRequest eventOutcomeRequest) {
-        String eventId = eventOutcomeRequest.eventId();
-        String eventName = eventOutcomeRequest.eventName();
-        String eventWinnerId = eventOutcomeRequest.eventWinnerId();
-
-        return EventOutcome.create(eventId, eventName, eventWinnerId);
-    }
+    @Mapping(target = "eventId", source = "eventId")
+    @Mapping(target = "eventName", source = "eventName")
+    @Mapping(target = "eventWinnerId", source = "eventWinnerId")
+    EventOutcome toDomain(EventOutcomeRequest eventOutcomeRequest);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)

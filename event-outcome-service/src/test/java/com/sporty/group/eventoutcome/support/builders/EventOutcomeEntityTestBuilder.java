@@ -36,11 +36,11 @@ public class EventOutcomeEntityTestBuilder {
     }
 
     public EventOutcomeEntity build() {
-        EventOutcomeEntity eventOutcomeEntity = new EventOutcomeEntity();
-        eventOutcomeEntity.setEventId(eventId);
-        eventOutcomeEntity.setEventName(eventName);
-        eventOutcomeEntity.setEventWinnerId(eventWinnerId);
-        eventOutcomeEntity.setCreatedAt(createdAt);
-        return eventOutcomeEntity;
+        return EventOutcomeEntity.builder()
+                .eventId(eventId)
+                .eventName(eventName)
+                .eventWinnerId(eventWinnerId)
+                .createdAt(createdAt)
+                .build();
     }
 }
