@@ -1,7 +1,5 @@
 package com.sporty.group.betsettlement.domain;
 
-import org.springframework.util.StringUtils;
-
 import java.math.BigDecimal;
 
 public record BetSettlement(
@@ -25,22 +23,22 @@ public record BetSettlement(
             BigDecimal betAmount,
             SettlementResult result
     ) {
-        if (StringUtils.isEmpty(betId)) {
+        if (betId == null || betId.isEmpty()) {
             throw new IllegalArgumentException("betId must not be blank");
         }
-        if (StringUtils.isEmpty(userId)) {
+        if (userId == null || userId.isEmpty()) {
             throw new IllegalArgumentException("userId must not be blank");
         }
-        if (StringUtils.isEmpty(eventId)) {
+        if (eventId == null || eventId.isEmpty()) {
             throw new IllegalArgumentException("eventId must not be blank");
         }
-        if (StringUtils.isEmpty(eventMarketId)) {
+        if (eventMarketId == null || eventMarketId.isEmpty()) {
             throw new IllegalArgumentException("eventMarketId must not be blank");
         }
-        if (StringUtils.isEmpty(expectedWinnerId)) {
+        if (expectedWinnerId == null || expectedWinnerId.isEmpty()) {
             throw new IllegalArgumentException("expectedWinnerId must not be blank");
         }
-        if (StringUtils.isEmpty(actualWinnerId)) {
+        if (actualWinnerId == null || actualWinnerId.isEmpty()) {
             throw new IllegalArgumentException("actualWinnerId must not be blank");
         }
         if (betAmount == null) {

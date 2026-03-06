@@ -16,6 +16,10 @@ public class BetSettlementEntityTestBuilder {
     private BigDecimal betAmount = new BigDecimal("10.00");
     private SettlementResult result = SettlementResult.WON;
 
+    public static BetSettlementEntityTestBuilder builder() {
+        return new BetSettlementEntityTestBuilder();
+    }
+
     public BetSettlementEntity build() {
         BetSettlementEntity betSettlementEntity = new BetSettlementEntity();
         betSettlementEntity.setBetId(betId);

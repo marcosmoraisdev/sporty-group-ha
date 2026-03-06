@@ -29,8 +29,8 @@ class BetSettlementServiceTest {
 
     @Test
     void savesMappedSettlementEntity() {
-        BetSettlement betSettlement = new BetSettlementTestBuilder().build();
-        BetSettlementEntity betSettlementEntity = new BetSettlementEntityTestBuilder().build();
+        BetSettlement betSettlement = BetSettlementTestBuilder.builder().build();
+        BetSettlementEntity betSettlementEntity = BetSettlementEntityTestBuilder.builder().build();
         given(betSettlementMapper.toEntity(betSettlement)).willReturn(betSettlementEntity);
 
         betSettlementService.apply(betSettlement);

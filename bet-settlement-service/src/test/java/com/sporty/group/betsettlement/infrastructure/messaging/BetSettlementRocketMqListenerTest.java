@@ -29,8 +29,8 @@ class BetSettlementRocketMqListenerTest {
 
     @Test
     void mapsIncomingMessageAndDelegatesToApplyService() {
-        BetSettlementMessage betSettlementMessage = new BetSettlementMessageTestBuilder().build();
-        BetSettlement betSettlement = new BetSettlementTestBuilder().build();
+        BetSettlementMessage betSettlementMessage = BetSettlementMessageTestBuilder.builder().build();
+        BetSettlement betSettlement = BetSettlementTestBuilder.builder().build();
         given(betSettlementMapper.toDomain(betSettlementMessage)).willReturn(betSettlement);
 
         betSettlementRocketMqListener.onMessage(betSettlementMessage);

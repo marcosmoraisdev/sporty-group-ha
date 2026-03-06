@@ -16,6 +16,10 @@ public class BetSettlementMessageTestBuilder {
     private BigDecimal betAmount = new BigDecimal("10.00");
     private BetSettlementResult result = BetSettlementResult.WON;
 
+    public static BetSettlementMessageTestBuilder builder() {
+        return new BetSettlementMessageTestBuilder();
+    }
+
     public BetSettlementMessage build() {
         return new BetSettlementMessage(
                 betId,
