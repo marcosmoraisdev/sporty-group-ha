@@ -23,6 +23,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,5 +57,17 @@ class ProcessEventOutcomeServiceTest {
         processEventOutcomeService.process(eventOutcome);
 
         verify(eventPublisher).publish(betSettlementMessage);
+    }
+
+    @Test
+    void returnsEarlyWhenNoMatchedBetsAreFound() {
+        EventOutcome eventOutcome = EventOutcomeTestBuilder.builder().build();
+        given(betJpaRepository.findByEventId("event-1")).willReturn(List.of());
+
+        processEventOutcomeService.process(eventOutcome);
+
+        verify(eventPublisher, never()).publish(any());
+        verify(betMapper, never()).toDomain(any());
+        verify(betSettlementMapper, never()).toMessage(any());
     }
 }
