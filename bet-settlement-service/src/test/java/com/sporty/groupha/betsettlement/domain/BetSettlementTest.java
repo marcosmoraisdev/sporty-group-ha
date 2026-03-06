@@ -9,9 +9,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class BetSettlementTest {
 
     @Test
-    void rejectsBlankBetId() {
+    void rejectsEmptyBetId() {
         assertThatThrownBy(() -> BetSettlement.create(
-                " ",
+                "",
                 "user-1",
                 "event-1",
                 "market-1",

@@ -1,5 +1,6 @@
 CREATE TABLE bet_settlements (
-    bet_id VARCHAR(64) PRIMARY KEY,
+    id UUID PRIMARY KEY,
+    bet_id VARCHAR(64) NOT NULL UNIQUE,
     user_id VARCHAR(64) NOT NULL,
     event_id VARCHAR(64) NOT NULL,
     event_market_id VARCHAR(64) NOT NULL,

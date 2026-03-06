@@ -2,26 +2,20 @@ package com.sporty.groupha.betsettlement.services;
 
 import com.sporty.groupha.betsettlement.domain.BetSettlement;
 import com.sporty.groupha.betsettlement.infrastructure.entity.BetSettlementEntity;
-import com.sporty.groupha.betsettlement.infrastructure.mappers.BetSettlementEntityMapper;
+import com.sporty.groupha.betsettlement.infrastructure.mappers.BetSettlementMapper;
 import com.sporty.groupha.betsettlement.infrastructure.persistence.BetSettlementJpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ApplyBetSettlementService {
 
-    private final BetSettlementEntityMapper betSettlementEntityMapper;
+    private final BetSettlementMapper betSettlementMapper;
     private final BetSettlementJpaRepository betSettlementJpaRepository;
 
-    public ApplyBetSettlementService(
-            BetSettlementEntityMapper betSettlementEntityMapper,
-            BetSettlementJpaRepository betSettlementJpaRepository
-    ) {
-        this.betSettlementEntityMapper = betSettlementEntityMapper;
-        this.betSettlementJpaRepository = betSettlementJpaRepository;
-    }
-
     public void apply(BetSettlement betSettlement) {
-        BetSettlementEntity betSettlementEntity = betSettlementEntityMapper.toEntity(betSettlement);
+        BetSettlementEntity betSettlementEntity = betSettlementMapper.toEntity(betSettlement);
 
         betSettlementJpaRepository.save(betSettlementEntity);
     }

@@ -5,17 +5,25 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Table(name = "bet_settlements")
+@Getter
 public class BetSettlementEntity {
 
     @Id
-    @Column(name = "bet_id", nullable = false, length = 64)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(name = "bet_id", nullable = false, unique = true, length = 64)
     private String betId;
 
     @Column(name = "user_id", nullable = false, length = 64)
@@ -40,64 +48,36 @@ public class BetSettlementEntity {
     @Column(name = "result", nullable = false, length = 16)
     private SettlementResult result;
 
-    public String getBetId() {
-        return betId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public void setBetId(String betId) {
         this.betId = betId;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getEventId() {
-        return eventId;
     }
 
     public void setEventId(String eventId) {
         this.eventId = eventId;
     }
 
-    public String getEventMarketId() {
-        return eventMarketId;
-    }
-
     public void setEventMarketId(String eventMarketId) {
         this.eventMarketId = eventMarketId;
-    }
-
-    public String getExpectedWinnerId() {
-        return expectedWinnerId;
     }
 
     public void setExpectedWinnerId(String expectedWinnerId) {
         this.expectedWinnerId = expectedWinnerId;
     }
 
-    public String getActualWinnerId() {
-        return actualWinnerId;
-    }
-
     public void setActualWinnerId(String actualWinnerId) {
         this.actualWinnerId = actualWinnerId;
     }
 
-    public BigDecimal getBetAmount() {
-        return betAmount;
-    }
-
     public void setBetAmount(BigDecimal betAmount) {
         this.betAmount = betAmount;
-    }
-
-    public SettlementResult getResult() {
-        return result;
     }
 
     public void setResult(SettlementResult result) {

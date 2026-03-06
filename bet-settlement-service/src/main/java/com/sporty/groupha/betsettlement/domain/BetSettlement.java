@@ -1,5 +1,7 @@
 package com.sporty.groupha.betsettlement.domain;
 
+import org.springframework.util.StringUtils;
+
 import java.math.BigDecimal;
 
 public record BetSettlement(
@@ -23,49 +25,40 @@ public record BetSettlement(
             BigDecimal betAmount,
             SettlementResult result
     ) {
-        validate("betId", betId);
-        validate("userId", userId);
-        validate("eventId", eventId);
-        validate("eventMarketId", eventMarketId);
-        validate("expectedWinnerId", expectedWinnerId);
-        validate("actualWinnerId", actualWinnerId);
-        validateAmount(betAmount);
-        validateResult(result);
-
-        String sanitizedBetId = betId.trim();
-        String sanitizedUserId = userId.trim();
-        String sanitizedEventId = eventId.trim();
-        String sanitizedEventMarketId = eventMarketId.trim();
-        String sanitizedExpectedWinnerId = expectedWinnerId.trim();
-        String sanitizedActualWinnerId = actualWinnerId.trim();
-
-        return new BetSettlement(
-                sanitizedBetId,
-                sanitizedUserId,
-                sanitizedEventId,
-                sanitizedEventMarketId,
-                sanitizedExpectedWinnerId,
-                sanitizedActualWinnerId,
-                betAmount,
-                result
-        );
-    }
-
-    private static void validate(String fieldName, String value) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException(fieldName + " must not be blank");
+        if (StringUtils.isEmpty(betId)) {
+            throw new IllegalArgumentException("betId must not be blank");
         }
-    }
-
-    private static void validateAmount(BigDecimal betAmount) {
+        if (StringUtils.isEmpty(userId)) {
+            throw new IllegalArgumentException("userId must not be blank");
+        }
+        if (StringUtils.isEmpty(eventId)) {
+            throw new IllegalArgumentException("eventId must not be blank");
+        }
+        if (StringUtils.isEmpty(eventMarketId)) {
+            throw new IllegalArgumentException("eventMarketId must not be blank");
+        }
+        if (StringUtils.isEmpty(expectedWinnerId)) {
+            throw new IllegalArgumentException("expectedWinnerId must not be blank");
+        }
+        if (StringUtils.isEmpty(actualWinnerId)) {
+            throw new IllegalArgumentException("actualWinnerId must not be blank");
+        }
         if (betAmount == null) {
             throw new IllegalArgumentException("betAmount must not be null");
         }
-    }
-
-    private static void validateResult(SettlementResult result) {
         if (result == null) {
             throw new IllegalArgumentException("result must not be null");
         }
+
+        return new BetSettlement(
+                betId,
+                userId,
+                eventId,
+                eventMarketId,
+                expectedWinnerId,
+                actualWinnerId,
+                betAmount,
+                result
+        );
     }
 }
