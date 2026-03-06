@@ -9,6 +9,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface BetMapper {
 
+    // MapStruct interprets settleAgainst(...) like a set* accessor and invents a "tleAgainst" target.
     @Mapping(target = "tleAgainst", ignore = true)
     @Mapping(target = "betId", source = "betId")
     @Mapping(target = "userId", source = "userId")
