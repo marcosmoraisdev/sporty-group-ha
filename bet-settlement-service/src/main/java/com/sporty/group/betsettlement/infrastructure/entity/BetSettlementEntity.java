@@ -6,10 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -17,10 +20,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "bet_settlements")
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BetSettlementEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
+    @UuidGenerator
     private UUID id;
 
     @Column(name = "bet_id", nullable = false, unique = true, length = 64)
@@ -47,40 +54,4 @@ public class BetSettlementEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "result", nullable = false, length = 16)
     private SettlementResult result;
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setBetId(String betId) {
-        this.betId = betId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
-    }
-
-    public void setEventMarketId(String eventMarketId) {
-        this.eventMarketId = eventMarketId;
-    }
-
-    public void setExpectedWinnerId(String expectedWinnerId) {
-        this.expectedWinnerId = expectedWinnerId;
-    }
-
-    public void setActualWinnerId(String actualWinnerId) {
-        this.actualWinnerId = actualWinnerId;
-    }
-
-    public void setBetAmount(BigDecimal betAmount) {
-        this.betAmount = betAmount;
-    }
-
-    public void setResult(SettlementResult result) {
-        this.result = result;
-    }
 }

@@ -5,11 +5,13 @@ import com.sporty.group.betsettlement.infrastructure.mappers.BetSettlementMapper
 import com.sporty.group.betsettlement.services.BetSettlementService;
 import com.sporty.group.commonlib.messaging.EventListener;
 import com.sporty.group.commonlib.messaging.settlement.BetSettlementMessage;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @RocketMQMessageListener(
@@ -23,6 +25,9 @@ public class BetSettlementRocketMqListener implements RocketMQListener<BetSettle
 
     @Override
     public void onMessage(BetSettlementMessage betSettlementMessage) {
+        String betId = betSettlementMessage.betId();
+        log.info("Received bet settlement message for betId={}", betId);
+
         BetSettlement betSettlement = betSettlementMapper.toDomain(betSettlementMessage);
 
         betSettlementService.apply(betSettlement);

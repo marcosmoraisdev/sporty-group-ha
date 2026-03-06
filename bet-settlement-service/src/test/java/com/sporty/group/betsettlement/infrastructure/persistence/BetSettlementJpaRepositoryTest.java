@@ -16,7 +16,7 @@ class BetSettlementJpaRepositoryTest {
 
     @Test
     void savesBetSettlementWithGeneratedUuidId() {
-        BetSettlementEntity betSettlementEntity = new BetSettlementEntityTestBuilder().build();
+        BetSettlementEntity betSettlementEntity = BetSettlementEntityTestBuilder.builder().build();
 
         BetSettlementEntity savedEntity = betSettlementJpaRepository.save(betSettlementEntity);
 

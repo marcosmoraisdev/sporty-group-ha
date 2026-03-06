@@ -5,8 +5,10 @@ import com.sporty.group.betsettlement.infrastructure.entity.BetSettlementEntity;
 import com.sporty.group.betsettlement.infrastructure.mappers.BetSettlementMapper;
 import com.sporty.group.betsettlement.infrastructure.persistence.BetSettlementJpaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BetSettlementService {
@@ -15,8 +17,11 @@ public class BetSettlementService {
     private final BetSettlementJpaRepository betSettlementJpaRepository;
 
     public void apply(BetSettlement betSettlement) {
+        String betId = betSettlement.betId();
         BetSettlementEntity betSettlementEntity = betSettlementMapper.toEntity(betSettlement);
 
+        log.info("Persisting bet settlement for betId={}", betId);
         betSettlementJpaRepository.save(betSettlementEntity);
+        log.info("Persisted bet settlement for betId={}", betId);
     }
 }

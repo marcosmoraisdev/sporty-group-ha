@@ -21,16 +21,15 @@ public class BetSettlementEntityTestBuilder {
     }
 
     public BetSettlementEntity build() {
-        BetSettlementEntity betSettlementEntity = new BetSettlementEntity();
-        betSettlementEntity.setBetId(betId);
-        betSettlementEntity.setUserId(userId);
-        betSettlementEntity.setEventId(eventId);
-        betSettlementEntity.setEventMarketId(eventMarketId);
-        betSettlementEntity.setExpectedWinnerId(expectedWinnerId);
-        betSettlementEntity.setActualWinnerId(actualWinnerId);
-        betSettlementEntity.setBetAmount(betAmount);
-        betSettlementEntity.setResult(result);
-
-        return betSettlementEntity;
+        return BetSettlementEntity.builder()
+                .betId(betId)
+                .userId(userId)
+                .eventId(eventId)
+                .eventMarketId(eventMarketId)
+                .expectedWinnerId(expectedWinnerId)
+                .actualWinnerId(actualWinnerId)
+                .betAmount(betAmount)
+                .result(result)
+                .build();
     }
 }
