@@ -11,6 +11,10 @@ public class EventOutcomeEntityTestBuilder {
     private String eventWinnerId = "winner-1";
     private LocalDateTime createdAt = LocalDateTime.of(2026, 3, 6, 10, 0);
 
+    public static EventOutcomeEntityTestBuilder builder() {
+        return new EventOutcomeEntityTestBuilder();
+    }
+
     public EventOutcomeEntityTestBuilder withEventId(String eventId) {
         this.eventId = eventId;
         return this;

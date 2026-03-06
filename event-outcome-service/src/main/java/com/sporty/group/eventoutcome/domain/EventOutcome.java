@@ -1,7 +1,5 @@
 package com.sporty.group.eventoutcome.domain;
 
-import org.springframework.util.StringUtils;
-
 public record EventOutcome(
         String eventId,
         String eventName,
@@ -9,13 +7,13 @@ public record EventOutcome(
 ) {
 
     public static EventOutcome create(String eventId, String eventName, String eventWinnerId) {
-        if (StringUtils.isEmpty(eventId)) {
+        if (eventId == null || eventId.isEmpty()) {
             throw new IllegalArgumentException("eventId must not be blank");
         }
-        if (StringUtils.isEmpty(eventName)) {
+        if (eventName == null || eventName.isEmpty()) {
             throw new IllegalArgumentException("eventName must not be blank");
         }
-        if (StringUtils.isEmpty(eventWinnerId)) {
+        if (eventWinnerId == null || eventWinnerId.isEmpty()) {
             throw new IllegalArgumentException("eventWinnerId must not be blank");
         }
 

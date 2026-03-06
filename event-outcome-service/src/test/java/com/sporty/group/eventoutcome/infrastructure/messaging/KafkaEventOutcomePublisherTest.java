@@ -19,7 +19,7 @@ class KafkaEventOutcomePublisherTest {
 
     @Test
     void sendsEventOutcomeMessageToConfiguredTopic() {
-        EventOutcomeMessage eventOutcomeMessage = new EventOutcomeMessageTestBuilder().build();
+        EventOutcomeMessage eventOutcomeMessage = EventOutcomeMessageTestBuilder.builder().build();
         EventPublisher<EventOutcomeMessage> eventPublisher =
                 new KafkaEventOutcomePublisher(kafkaTemplate, "event-outcomes");
 

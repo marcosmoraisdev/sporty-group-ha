@@ -16,7 +16,7 @@ class EventOutcomeJpaRepositoryTest {
 
     @Test
     void savesEventOutcomeWithGeneratedUuidId() {
-        EventOutcomeEntity eventOutcomeEntity = new EventOutcomeEntityTestBuilder().build();
+        EventOutcomeEntity eventOutcomeEntity = EventOutcomeEntityTestBuilder.builder().build();
 
         EventOutcomeEntity savedEntity = eventOutcomeJpaRepository.save(eventOutcomeEntity);
 

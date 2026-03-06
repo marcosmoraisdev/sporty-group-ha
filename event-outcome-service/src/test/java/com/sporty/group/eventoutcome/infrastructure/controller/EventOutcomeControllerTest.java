@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sporty.group.eventoutcome.domain.EventOutcome;
 import com.sporty.group.eventoutcome.infrastructure.dto.EventOutcomeRequest;
 import com.sporty.group.eventoutcome.infrastructure.mappers.EventOutcomeMapper;
+import com.sporty.group.eventoutcome.support.builders.EventOutcomeTestBuilder;
 import com.sporty.group.eventoutcome.support.builders.EventOutcomeRequestTestBuilder;
 import com.sporty.group.eventoutcome.services.PublishEventOutcomeService;
 import org.junit.jupiter.api.Test;
@@ -36,8 +37,8 @@ class EventOutcomeControllerTest {
 
     @Test
     void mapsRequestToDomainAndReturnsAccepted() throws Exception {
-        EventOutcomeRequest eventOutcomeRequest = new EventOutcomeRequestTestBuilder().build();
-        EventOutcome eventOutcome = EventOutcome.create("event-1", "Match A", "winner-1");
+        EventOutcomeRequest eventOutcomeRequest = EventOutcomeRequestTestBuilder.builder().build();
+        EventOutcome eventOutcome = EventOutcomeTestBuilder.builder().build();
         given(eventOutcomeMapper.toDomain(any(EventOutcomeRequest.class)))
                 .willReturn(eventOutcome);
 

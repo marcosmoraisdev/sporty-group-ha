@@ -8,6 +8,10 @@ public class EventOutcomeRequestTestBuilder {
     private String eventName = "Match A";
     private String eventWinnerId = "winner-1";
 
+    public static EventOutcomeRequestTestBuilder builder() {
+        return new EventOutcomeRequestTestBuilder();
+    }
+
     public EventOutcomeRequestTestBuilder withEventId(String eventId) {
         this.eventId = eventId;
         return this;

@@ -8,6 +8,7 @@ import com.sporty.group.eventoutcome.infrastructure.mappers.EventOutcomeMapper;
 import com.sporty.group.eventoutcome.infrastructure.persistence.EventOutcomeJpaRepository;
 import com.sporty.group.eventoutcome.support.builders.EventOutcomeEntityTestBuilder;
 import com.sporty.group.eventoutcome.support.builders.EventOutcomeMessageTestBuilder;
+import com.sporty.group.eventoutcome.support.builders.EventOutcomeTestBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,9 +36,9 @@ class PublishEventOutcomeServiceTest {
 
     @Test
     void savesAcceptedOutcomeBeforePublishing() {
-        EventOutcome eventOutcome = EventOutcome.create("event-1", "Match A", "winner-1");
-        EventOutcomeEntity eventOutcomeEntity = new EventOutcomeEntityTestBuilder().build();
-        EventOutcomeMessage eventOutcomeMessage = new EventOutcomeMessageTestBuilder().build();
+        EventOutcome eventOutcome = EventOutcomeTestBuilder.builder().build();
+        EventOutcomeEntity eventOutcomeEntity = EventOutcomeEntityTestBuilder.builder().build();
+        EventOutcomeMessage eventOutcomeMessage = EventOutcomeMessageTestBuilder.builder().build();
         given(eventOutcomeMapper.toEntity(eventOutcome))
                 .willReturn(eventOutcomeEntity);
         given(eventOutcomeMapper.toMessage(eventOutcome))
