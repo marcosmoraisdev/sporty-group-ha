@@ -1,6 +1,8 @@
 package com.sporty.groupha.commonlib;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sporty.groupha.commonlib.messaging.EventListener;
+import com.sporty.groupha.commonlib.messaging.EventPublisher;
 import com.sporty.groupha.commonlib.messaging.event.EventOutcomeMessage;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +11,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MessageContractSerializationTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Test
+    void exposesGenericEventMessagingContracts() {
+        EventPublisher<EventOutcomeMessage> publisher = event -> {
+        };
+        EventListener<EventOutcomeMessage> listener = event -> {
+        };
+
+        assertThat(publisher).isNotNull();
+        assertThat(listener).isNotNull();
+    }
 
     @Test
     void serializesEventOutcomeMessage() throws Exception {
