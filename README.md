@@ -163,7 +163,7 @@ HTTP/1.1 202 Accepted
 
 That single request should trigger:
 
-- one accepted event outcome persisted by `event-outcome-service`
+- one event outcome persisted by `event-outcome-service`
 - two matched bets processed by `bet-matching-service`
 - two settlement rows persisted by `bet-settlement-service`
 

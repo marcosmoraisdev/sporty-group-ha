@@ -12,7 +12,7 @@ The runtime behavior must remain the same:
 - Update everything in the repository, including code, tests, build files, README, and existing plan/design documents.
 - Cover only domain factories and behavior methods that actually contain branching logic.
 - Standardize flow logging with `INFO` for normal milestones and `WARN` for invalid or skipped states.
-- Replace `StringUtils.isEmpty(...)` in domain objects with equivalent plain Java validation that still rejects `null` and empty strings.
+- Replace framework string-empty helper usage in domain objects with equivalent plain Java validation that still rejects `null` and empty strings.
 
 ## Approaches Considered
 
@@ -59,10 +59,10 @@ This is the best fit because the requested work is mostly convention cleanup rat
 The cleanup will be organized in four concern-driven phases:
 
 1. Namespace and naming normalization.
-   This covers `com.sporty.groupha` to `com.sporty.group`, Maven `groupId`, package declarations, imports, stale references in docs, and class naming consistency. `BetSettlementService` remains the canonical service name, and any lingering `ApplyBetSettlementService` references are removed from tests or docs.
+   This covers standardizing the codebase on `com.sporty.group`, updating Maven `groupId`, package declarations, imports, stale references in docs, and class naming consistency. `BetSettlementService` remains the canonical service name, and any lingering legacy settlement-service references are removed from tests or docs.
 
 2. Persistence model normalization.
-   This covers entity construction rules, UUID generator updates, and schema naming alignment. The `accepted_event_outcomes` table is renamed to `event_outcome`.
+   This covers entity construction rules, UUID generator updates, and schema naming alignment. The event-outcome table name is normalized to `event_outcome`.
 
 3. Boundary mapping and test-support cleanup.
    This covers mapper refinements, test builder standardization, and replacing inline domain construction in tests with test builders.
@@ -71,7 +71,7 @@ The cleanup will be organized in four concern-driven phases:
    This covers branch-complete domain tests and flow logs that make the event path traceable across services.
 
 ### 2. Namespace And Naming Rules
-The repository namespace changes from `com.sporty.groupha` to `com.sporty.group` everywhere:
+The repository namespace is standardized on `com.sporty.group` everywhere:
 - Java package declarations
 - imports
 - Maven parent and module coordinates
@@ -117,7 +117,7 @@ Specific mapper outcomes:
 ### 5. Domain Behavior Rules
 Domain validation stays explicit and framework-free.
 
-Where domain logic currently uses `StringUtils.isEmpty(...)`, it will be replaced with plain Java checks that preserve behavior:
+Where domain logic currently uses a framework string-empty helper, it will be replaced with plain Java checks that preserve behavior:
 - reject `null`
 - reject `""`
 
@@ -126,7 +126,7 @@ This applies only to domain classes with actual logic. Passive records with no v
 ### 6. Test Support Rules
 All test builders in the repository will use the same entry pattern:
 - each builder exposes a static `builder()` method
-- tests use `TypeTestBuilder.builder()` instead of `new TypeTestBuilder()`
+- tests use the builder static entrypoint instead of direct builder construction
 
 `EventOutcomeTestBuilder` becomes the standard path for domain event outcome test setup in places where tests currently call `EventOutcome.create(...)` inline.
 
@@ -197,10 +197,10 @@ The intended outcome is that one event outcome can be followed through ingestion
 
 ## Success Criteria
 The cleanup is complete when:
-- `com.sporty.groupha` is fully replaced by `com.sporty.group`
+- the legacy namespace is fully replaced by `com.sporty.group`
 - all requested repo-wide naming and convention updates are applied
 - entities use `@UuidGenerator`, constructors, no setters, and entity-only builders
-- `accepted_event_outcomes` is replaced by `event_outcome`
+- legacy event-outcome table naming is replaced by `event_outcome`
 - test builders use the `builder()` static entry pattern
 - domain tests cover all actual branching behavior
 - flow logs exist for key normal and skipped processing states
