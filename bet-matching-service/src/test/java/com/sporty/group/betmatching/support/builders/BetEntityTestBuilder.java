@@ -23,13 +23,13 @@ public class BetEntityTestBuilder {
     }
 
     public BetEntity build() {
-        BetEntity betEntity = new BetEntity();
-        betEntity.setBetId(betId);
-        betEntity.setUserId(userId);
-        betEntity.setEventId(eventId);
-        betEntity.setEventMarketId(eventMarketId);
-        betEntity.setEventWinnerId(eventWinnerId);
-        betEntity.setBetAmount(betAmount);
-        return betEntity;
+        return BetEntity.builder()
+                .betId(betId)
+                .userId(userId)
+                .eventId(eventId)
+                .eventMarketId(eventMarketId)
+                .eventWinnerId(eventWinnerId)
+                .betAmount(betAmount)
+                .build();
     }
 }

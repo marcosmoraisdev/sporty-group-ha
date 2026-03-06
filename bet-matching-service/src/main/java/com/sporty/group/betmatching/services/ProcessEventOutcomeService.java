@@ -24,10 +24,14 @@ public class ProcessEventOutcomeService {
     private final EventPublisher<BetSettlementMessage> eventPublisher;
 
     public void process(EventOutcome eventOutcome) {
-        List<BetEntity> matchedBetEntities = betJpaRepository.findByEventId(eventOutcome.eventId());
+        String eventId = eventOutcome.eventId();
+        List<BetEntity> matchedBetEntities = betJpaRepository.findByEventId(eventId);
+        int matchedBetCount = matchedBetEntities.size();
 
-        if(matchedBetEntities.isEmpty()) {
-            log.warn("No bets found for event outcome with eventId: {}", eventOutcome.eventId());
+        log.info("Processing event outcome for eventId={} matchedBetCount={}", eventId, matchedBetCount);
+
+        if (matchedBetEntities.isEmpty()) {
+            log.warn("No bets found for event outcome with eventId={}", eventId);
             return;
         }
 
@@ -36,5 +40,7 @@ public class ProcessEventOutcomeService {
                 .map(matchedBet -> matchedBet.settleAgainst(eventOutcome))
                 .map(betSettlementMapper::toMessage)
                 .forEach(eventPublisher::publish);
+
+        log.info("Published settlement messages for eventId={} matchedBetCount={}", eventId, matchedBetCount);
     }
 }

@@ -3,12 +3,13 @@ package com.sporty.group.betmatching.infrastructure.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -16,12 +17,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "bets")
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BetEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
+    @UuidGenerator
     private UUID id;
 
     @Column(name = "bet_id", nullable = false)
@@ -41,32 +44,4 @@ public class BetEntity {
 
     @Column(name = "bet_amount", nullable = false)
     private BigDecimal betAmount;
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setBetId(String betId) {
-        this.betId = betId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
-    }
-
-    public void setEventMarketId(String eventMarketId) {
-        this.eventMarketId = eventMarketId;
-    }
-
-    public void setEventWinnerId(String eventWinnerId) {
-        this.eventWinnerId = eventWinnerId;
-    }
-
-    public void setBetAmount(BigDecimal betAmount) {
-        this.betAmount = betAmount;
-    }
 }
