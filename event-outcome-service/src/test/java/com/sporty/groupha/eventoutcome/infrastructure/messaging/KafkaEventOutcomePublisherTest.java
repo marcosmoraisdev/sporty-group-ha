@@ -1,6 +1,8 @@
 package com.sporty.groupha.eventoutcome.infrastructure.messaging;
 
+import com.sporty.groupha.commonlib.messaging.EventPublisher;
 import com.sporty.groupha.commonlib.messaging.event.EventOutcomeMessage;
+import com.sporty.groupha.eventoutcome.support.builders.EventOutcomeMessageTestBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -17,11 +19,11 @@ class KafkaEventOutcomePublisherTest {
 
     @Test
     void sendsEventOutcomeMessageToConfiguredTopic() {
-        EventOutcomeMessage eventOutcomeMessage = new EventOutcomeMessage("event-1", "Match A", "winner-1");
-        KafkaEventOutcomePublisher kafkaEventOutcomePublisher =
+        EventOutcomeMessage eventOutcomeMessage = new EventOutcomeMessageTestBuilder().build();
+        EventPublisher<EventOutcomeMessage> eventPublisher =
                 new KafkaEventOutcomePublisher(kafkaTemplate, "event-outcomes");
 
-        kafkaEventOutcomePublisher.publish(eventOutcomeMessage);
+        eventPublisher.publish(eventOutcomeMessage);
 
         verify(kafkaTemplate).send("event-outcomes", eventOutcomeMessage);
     }
